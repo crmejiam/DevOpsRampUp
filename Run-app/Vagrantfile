@@ -5,10 +5,12 @@
 BackendIP = "10.0.0.8"
 # IP for the VM where the Frontend is going to be executed
 FrontendIP = "10.0.0.10"
+# IP for the VM where the Database is going to be executed
+DatabaseIP = "10.0.0.12"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.synced_folder "../shared", "/shared"
+  config.vm.synced_folder "../shared", "home/vagrant/shared"
 
   # Define backend
   config.vm.define "backend" do |backend|
@@ -34,18 +36,16 @@ Vagrant.configure("2") do |config|
 
   end
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  # Define database
+  config.vm.define "database" do |database|
+    database.vm.box = "ubuntu/trusty64"
+    database.vm.network "forwarded_port", guest: 4000, host: 4000
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+    # This gives the backend instance a static IP, to ease network communication
+    database.vm.network :private_network, ip: DatabaseIP
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
+    database.vm.provision :shell, path: "Provision-database.sh"
+
+  end
 
 end
