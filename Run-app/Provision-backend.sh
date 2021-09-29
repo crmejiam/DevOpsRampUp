@@ -16,19 +16,17 @@ n stable
 # Download the repo's contents
 apt-get install git -y
 git clone https://github.com/crmejiam/movie-analyst-api.git
-git clone https://github.com/crmejiam/movie-analyst-ui.git
 
 # For Movie-Analyst-Api Repo
 cd movie-analyst-api
 npm install -y
 
-# For Movie-Analyst-ui Repo
-cd ../movie-analyst-ui 
-npm install -y
+# # Define Environment variables
+# echo 'export PORT=3000' >> /etc/profile
+# sudo echo 'BACK_HOST="http://10.0.0.8:3000"' >> /home/vagrant/movie-analyst-api/.env
 
-# Let's start running the ui and api to see if it works correctly (UI runs on port 3030 and api on port 3000)
-cd /home/vagrant/movie-analyst-ui
-npm start &              # start for movie-analyst-ui
+# # Copy .env file to shared folder
+# cp /home/vagrant/movie-analyst-api/.env /home/vagrant/shared/
 
-cd /home/vagrant/movie-analyst-api
+# Let's start running the api (Api runs on 10.0.0.8 IP on port 3000)
 npm start &              # start for movie-analyst-api

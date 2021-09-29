@@ -2,14 +2,32 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  config.vm.network "forwarded_port", guest: 3030, host: 3030       # For the UI
-  config.vm.network "forwarded_port", guest: 3000, host: 3000       # For the api
+  config.vm.synced_folder "../shared", "/shared"
+
+  # Define backend
+  config.vm.define "backend" do |backend|
+    backend.vm.box = "ubuntu/trusty64"
+    backend.vm.network "forwarded_port", guest: 3000, host: 3000
+
+    # This gives the backend instance a static IP, to ease network communication
+    backend.vm.network :private_network, ip: "10.0.0.8"
+
+    backend.vm.provision :shell, path: "Provision-backend.sh"
+
+  end
+
+  # Define frontend
+  config.vm.define "frontend" do |frontend|
+    frontend.vm.box = "ubuntu/trusty64"
+    frontend.vm.network "forwarded_port", guest: 3030, host: 3030
+
+    # This gives the backend instance a static IP, to ease network communication
+    frontend.vm.network :private_network, ip: "10.0.0.10"
+
+    frontend.vm.provision :shell, path: "Provision-frontend.sh", env: {"BACK_HOST" => "10.0.0.8"}
+
+  end
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -25,27 +43,4 @@ Vagrant.configure("2") do |config|
   # your network.
   # config.vm.network "public_network"
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  config.vm.synced_folder "../shared", "/shared"
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  
-  config.vm.provider "virtualbox" do |vb|
-    # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-  end
-
-  # # Stop some firewall and security configuration to makes things easier.  --> REALIZAR EN UBUNTU
-  # config.vm.provision "shell",
-  #   inline: "sudo systemctl stop firewalld; sudo systemctl disable firewalld"
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  config.vm.provision :shell, path: "Provision.sh"
 end
