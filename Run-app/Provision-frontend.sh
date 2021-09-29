@@ -21,8 +21,5 @@ git clone https://github.com/crmejiam/movie-analyst-ui.git
 cd movie-analyst-ui 
 npm install -y
 
-# # Copy .env file to repo folder
-# cp /home/vagrant/shared/.env /home/vagrant/movie-analyst-ui/v
-
 # Let's start running the ui (UI runs on 10.0.0.10 IP on port 3030)
 npm start &              # start for movie-analyst-ui

@@ -21,12 +21,5 @@ git clone https://github.com/crmejiam/movie-analyst-api.git
 cd movie-analyst-api
 npm install -y
 
-# # Define Environment variables
-# echo 'export PORT=3000' >> /etc/profile
-# sudo echo 'BACK_HOST="http://10.0.0.8:3000"' >> /home/vagrant/movie-analyst-api/.env
-
-# # Copy .env file to shared folder
-# cp /home/vagrant/movie-analyst-api/.env /home/vagrant/shared/
-
 # Let's start running the api (Api runs on 10.0.0.8 IP on port 3000)
 npm start &              # start for movie-analyst-api
