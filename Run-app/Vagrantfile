@@ -1,6 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# IP for the VM where the Backend is going to be executed
+BackendIP = "10.0.0.8"
+# IP for the VM where the Frontend is going to be executed
+FrontendIP = "10.0.0.10"
+
 Vagrant.configure("2") do |config|
 
   config.vm.synced_folder "../shared", "/shared"
@@ -11,7 +16,7 @@ Vagrant.configure("2") do |config|
     backend.vm.network "forwarded_port", guest: 3000, host: 3000
 
     # This gives the backend instance a static IP, to ease network communication
-    backend.vm.network :private_network, ip: "10.0.0.8"
+    backend.vm.network :private_network, ip: BackendIP
 
     backend.vm.provision :shell, path: "Provision-backend.sh"
 
@@ -23,9 +28,9 @@ Vagrant.configure("2") do |config|
     frontend.vm.network "forwarded_port", guest: 3030, host: 3030
 
     # This gives the backend instance a static IP, to ease network communication
-    frontend.vm.network :private_network, ip: "10.0.0.10"
+    frontend.vm.network :private_network, ip: FrontendIP
 
-    frontend.vm.provision :shell, path: "Provision-frontend.sh", env: {"BACK_HOST" => "10.0.0.8"}
+    frontend.vm.provision :shell, path: "Provision-frontend.sh", env: {"BACK_HOST" => BackendIP}
 
   end
 
