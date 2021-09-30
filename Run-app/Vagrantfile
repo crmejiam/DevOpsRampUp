@@ -10,7 +10,7 @@ DatabaseIP = "10.0.0.12"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.synced_folder "../shared", "home/vagrant/shared"
+  config.vm.synced_folder "../shared", "/home/vagrant/shared"
 
   # Define backend
   config.vm.define "backend" do |backend|
