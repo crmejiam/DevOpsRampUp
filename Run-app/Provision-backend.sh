@@ -24,5 +24,10 @@ npm install -y
 # Let's copy table_creation_and_inserts.sql file for the creation of the database
 cp ./data_model/table_creation_and_inserts.sql /home/vagrant/shared/
 
+# Let's install MySQL server
+echo 'mysql-server mysql-server/root_password password ubuntu' | debconf-set-selections
+echo 'mysql-server mysql-server/root_password_again password ubuntu' | debconf-set-selections
+apt install -y mysql-server
+
 # Let's start running the api (Api runs on 10.0.0.8 IP on port 3000)
 npm start &              # start for movie-analyst-api
