@@ -1,0 +1,1 @@
+## This folder is for sharing documents between VMs, in this case, to sharing table_creation_and_inserts.sql file
