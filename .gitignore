@@ -1,2 +1,2 @@
-Run-app/.vagrant
-../shared/table_creation_and_inserts.sql
+vagrant/.vagrant
+/shared/table_creation_and_inserts.sql
