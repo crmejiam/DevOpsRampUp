@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # First, we update apt-get in order to get the latest versions of all dependencies
-apt-get update -y
+sudo apt-get update -y
 
 # Let's install MySQL server
 echo 'mysql-server mysql-server/root_password password ubuntu' | debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password ubuntu' | debconf-set-selections
-apt install -y mysql-server
+sudo apt install -y mysql-server
 
 # Now we are going to log onto root user in MySQL, create the database movie_db, change the database
 # to movie_db and execute table_creation_and_inserts.sql file to create all data required
@@ -22,6 +22,6 @@ EOF
 # Line 18 is to authorize access to backend VM
 
 # We need to give access to backend VM to enter to the database VM
-sed -i 's/bind-address.*/#bind-address           = 127.0.0.1/g' /etc/mysql/my.cnf
-sed -i '48 i #skip-networking' /etc/mysql/my.cnf
-service mysql restart
+sudo sed -i 's/bind-address.*/#bind-address           = 127.0.0.1/g' /etc/mysql/my.cnf
+sudo sed -i '48 i #skip-networking' /etc/mysql/my.cnf
+sudo service mysql restart
