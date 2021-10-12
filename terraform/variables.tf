@@ -1,47 +1,94 @@
+# Variable name declaration between modules:
+# If a variable is going to be used globally for all modules then is going to have the same name on all
+# declarations, for example:
+
+# On root variables.tf --> variable userID{}, module... userID = var.userID
+# on module variables.tf --> variable userID{}, user_id = var.userID
+
+# If a variable is going to be used from one module to another (except root module) then is going to have
+# a prefix of the origin module on the name, for example:
+
+# on backend module variables.tf --> variable staticIP{}, ip = var.staticIP{}
+# on frontend module variables.tf --> variable backend_IP{}, API = var.backend_IP
+
 variable "RampUpRegion" {
-    description = "Region in which we are going to develop all activities of the Ramp Up"
-    type = string
-    default = "us-west-1"
+  description = "Region in which we are going to develop all activities of the Ramp Up"
+  type        = string
+  default     = "us-west-1"
 }
 
 variable "UbuntuAMI" {
-    description = "Ubuntu AMI for the RampUpRegion"
-    type = string
-    default = "ami-0d382e80be7ffdae5"
+  description = "Ubuntu AMI for the RampUpRegion"
+  type        = string
+  default     = "ami-0d382e80be7ffdae5"
 }
 
 variable "AvailabilityZone" {
-    description = "Availability Zone for the public and private subnet that we are going to use"
-    type = string
-    default = "us-west-1a"
+  description = "Availability Zone for the public and private subnet that we are going to use"
+  type        = string
+  default     = "us-west-1a"
 }
 
 variable "InstanceType" {
-    description = "The type of instance that we are going to use in the Ramp Up"
-    type = string
-    default = "t2.micro"
-}
-
-variable "IAMUser" {
-    description = "IAM User for the responsible of the created resources"
-    type = string
-    default = "cristian.mejiam"
+  description = "The type of instance that we are going to use in the Ramp Up"
+  type        = string
+  default     = "t2.micro"
 }
 
 variable "ramp_up_training_id" {
-    description = "ID for the vpc of the rampup"
-    type = string
-    default = "vpc-0d2831659ef89870c"
+  description = "ID for the vpc of the rampup"
+  type        = string
+  default     = "vpc-0d2831659ef89870c"
 }
 
-variable "rampup_training_private_id" {
-    description = "ID for the private subnet #0 of the rampup"
-    type = string
-    default = "subnet-0d74b59773148d704"
+variable "rampup_subnet_id" {
+  description = "ID of the subnets for each instance, 0 is public, 1 and 2 are private"
+  type        = list(string)
+  default     = ["subnet-0088df5de3a4fe490", "subnet-0d74b59773148d704", "subnet-0d74b59773148d704"]
+  # index 1 and 2 are repeated in order to match count value
 }
 
-variable "rampup_training_public_id" {
-    description = "ID for the public subnet #0 of the rampup"
-    type = string
-    default = "subnet-0088df5de3a4fe490"
+variable "key_pair_name" {
+  description = "The EC2 Key Pair to associate with the EC2 Instance for SSH access."
+  type        = string
+  default     = "Ramp-Up-cristian.mejiam-Key-Pair"
+}
+
+variable "trainee_tags" {
+  description = "Tags that are necessary to every resource in order to be created"
+  type        = map(string)
+  default = {
+    project     = "ramp-up-devops"
+    responsible = "cristian.mejiam"
+  }
+}
+
+variable "module" {
+  description = "List with the name of the modules"
+  type        = list(string)
+  default     = ["frontend", "backend", "database"]
+}
+
+variable "instance_name" {
+  description = "List with the names of each instance"
+  type        = list(string)
+  default     = ["frontend-rampup-cristian.mejiam", "backend-rampup-cristian.mejiam", "database-rampup-cristian.mejiam"]
+}
+
+variable "volume_name" {
+  description = "List with the names of each volume"
+  type        = list(string)
+  default     = ["frontVol-rampup-cristian.mejiam", "backVol-rampup-cristian.mejiam", "dbVol-rampup-cristian.mejiam"]
+}
+
+variable "provisioner_file" {
+  description = "List with the names of each provisioner .sh file"
+  type        = list(string)
+  default     = ["Provision-frontend.sh", "Provision-backend.sh", "Provision-database.sh"]
+}
+
+variable "port" {
+  description = "List of ports designed for access in each instance"
+  type        = list(number)
+  default     = [3030, 3000, 3306]
 }
