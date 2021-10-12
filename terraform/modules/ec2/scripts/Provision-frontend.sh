@@ -21,5 +21,5 @@ git clone https://github.com/crmejiam/movie-analyst-ui.git
 cd movie-analyst-ui 
 sudo npm install -y
 
-# Let's start running the ui (UI runs on 10.0.0.10 IP on port 3030)
+# Let's start running the ui (UI runs on port 3030)
 npm start &              # start for movie-analyst-ui

@@ -21,9 +21,6 @@ git clone https://github.com/crmejiam/movie-analyst-api.git
 cd movie-analyst-api
 sudo npm install -y
 
-# Let's copy table_creation_and_inserts.sql file for the creation of the database
-sudo cp ./data_model/table_creation_and_inserts.sql /home/vagrant/shared/
-
 # Let's install MySQL server
 echo 'mysql-server mysql-server/root_password password ubuntu' | debconf-set-selections
 echo 'mysql-server mysql-server/root_password_again password ubuntu' | debconf-set-selections

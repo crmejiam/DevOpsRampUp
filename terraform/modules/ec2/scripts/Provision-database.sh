@@ -13,12 +13,12 @@ sudo apt install -y mysql-server
 mysql -u root -pubuntu << EOF
 CREATE DATABASE movie_db; 
 USE movie_db;
-source /home/vagrant/shared/table_creation_and_inserts.sql;
+source ./table_creation_and_inserts.sql;
 
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.0.8' IDENTIFIED BY 'ubuntu' WITH GRANT OPTION;
 
 EOF
-
+#change ip 10.0.0.8 to backend ip from aws
 # Line 18 is to authorize access to backend VM
 
 # We need to give access to backend VM to enter to the database VM
