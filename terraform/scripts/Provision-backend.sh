@@ -29,5 +29,5 @@ echo 'mysql-server mysql-server/root_password password ubuntu' | debconf-set-sel
 echo 'mysql-server mysql-server/root_password_again password ubuntu' | debconf-set-selections
 sudo apt install -y mysql-server
 
-# Let's start running the api (Api runs on 10.0.0.8 IP on port 3000)
+# Let's start running the api (Api runs on 10.0.0.8 IP for VAGRANT [on port 3000 for terraform and vagrant])
 npm start &              # start for movie-analyst-api
