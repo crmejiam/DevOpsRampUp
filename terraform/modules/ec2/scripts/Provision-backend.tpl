@@ -17,6 +17,13 @@ sudo n stable
 sudo apt-get install git -y
 git clone https://github.com/crmejiam/movie-analyst-api.git
 
+# Let's define the required environment variables
+
+echo "export DB_HOST=${db_host}" >> /etc/profile
+echo "export DB_USER=${db_user}" >> /etc/profile
+echo "export DB_PASS=${db_pass}" >> /etc/profile
+
+
 # For Movie-Analyst-Api Repo
 cd movie-analyst-api
 sudo npm install -y

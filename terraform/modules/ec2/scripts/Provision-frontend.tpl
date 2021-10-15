@@ -17,6 +17,10 @@ sudo n stable
 sudo apt-get install git -y
 git clone https://github.com/crmejiam/movie-analyst-ui.git
 
+# Let's define the required environment variables
+
+echo "export BACK_HOST=${back_host}" >> /etc/profile
+
 # For Movie-Analyst-ui Repo
 cd movie-analyst-ui 
 sudo npm install -y

@@ -26,6 +26,10 @@ FLUSH PRIVILEGES;
 EOF
 # Line 22 to 24 is to authorize access to backend VM
 
+# Let's define the required environment variables
+
+echo "export BACK_HOST=${back_host}" >> /etc/profile
+
 # We need to give access to backend VM to enter to the database VM
 sudo sed -i 's/bind-address.*/bind-address            = 10.1.0.8/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 sudo sed -i '32 i #skip-networking' /etc/mysql/mysql.conf.d/mysqld.cnf
