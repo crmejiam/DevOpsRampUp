@@ -139,7 +139,7 @@ variable "env_variables" {
     },
     {
       db_host = "10.1.0.12"
-      db_user = "root"
+      db_user = "backrampup"
       db_pass = "ubuntu"
     },
     {
