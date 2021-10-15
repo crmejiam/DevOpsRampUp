@@ -10,18 +10,23 @@ sudo apt install -y mysql-server
 
 # Now we are going to log onto root user in MySQL, create the database movie_db, change the database
 # to movie_db and execute table_creation_and_inserts.sql file to create all data required
+
+# Let's download the .sql file directly from the repo
+sudo curl -o table_creation_and_inserts.sql https://raw.githubusercontent.com/crmejiam/movie-analyst-api/master/data_model/table_creation_and_inserts.sql
+
 mysql -u root -pubuntu << EOF
 CREATE DATABASE movie_db; 
 USE movie_db;
-source ./table_creation_and_inserts.sql;
+SOURCE /table_creation_and_inserts.sql;
 
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.0.0.8' IDENTIFIED BY 'ubuntu' WITH GRANT OPTION;
+CREATE USER 'backrampup'@'10.1.0.8' IDENTIFIED BY 'ubuntu';
+GRANT ALL PRIVILEGES ON movie_db.* TO 'backrampup'@'10.1.0.8' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
 EOF
-#change ip 10.0.0.8 to backend ip from aws
-# Line 18 is to authorize access to backend VM
+# Line 22 to 24 is to authorize access to backend VM
 
 # We need to give access to backend VM to enter to the database VM
-sudo sed -i 's/bind-address.*/#bind-address           = 127.0.0.1/g' /etc/mysql/my.cnf
-sudo sed -i '48 i #skip-networking' /etc/mysql/my.cnf
-sudo service mysql restart
+sudo sed -i 's/bind-address.*/bind-address            = 10.1.0.8/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -i '32 i #skip-networking' /etc/mysql/mysql.conf.d/mysqld.cnf
+# sudo service mysql restart
