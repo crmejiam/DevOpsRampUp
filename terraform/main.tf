@@ -15,8 +15,8 @@ provider "aws" {
 
 module "ec2_instance" {
 
-  count               = length(var.module)
-  module              = var.module[count.index]
+  count               = length(var.server_type)
+  server_type         = var.server_type[count.index]
   source              = "./modules/ec2"
   UbuntuAMI           = var.UbuntuAMI
   InstanceType        = var.InstanceType
@@ -29,5 +29,6 @@ module "ec2_instance" {
   volume_name         = var.volume_name[count.index]
   provisioner_file    = var.provisioner_file[count.index]
   port                = var.port[count.index]
-
+  privateIP           = var.privateIP[count.index]
+  env_vars            = var.env_vars[count.index]
 }

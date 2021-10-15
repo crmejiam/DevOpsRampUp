@@ -41,11 +41,19 @@ variable "ramp_up_training_id" {
   default     = "vpc-0d2831659ef89870c"
 }
 
+# variable "rampup_subnet_id" {
+#   description = "ID of the subnets for each instance, 0 is public, 1 and 2 are private"
+#   type        = list(string)
+#   default     = ["subnet-0088df5de3a4fe490", "subnet-0d74b59773148d704", "subnet-0d74b59773148d704"]
+#   # index 1 and 2 are repeated in order to match count value
+# }
+
+# TEMPORARY DEBUG VALUE
+# all subnet ids are the public subnet id, all for ssh access and debug purposes
 variable "rampup_subnet_id" {
   description = "ID of the subnets for each instance, 0 is public, 1 and 2 are private"
   type        = list(string)
-  default     = ["subnet-0088df5de3a4fe490", "subnet-0d74b59773148d704", "subnet-0d74b59773148d704"]
-  # index 1 and 2 are repeated in order to match count value
+  default     = ["subnet-0088df5de3a4fe490", "subnet-0088df5de3a4fe490", "subnet-0088df5de3a4fe490"]
 }
 
 variable "key_pair_name" {
@@ -63,7 +71,7 @@ variable "trainee_tags" {
   }
 }
 
-variable "module" {
+variable "server_type" {
   description = "List with the name of the modules"
   type        = list(string)
   default     = ["frontend", "backend", "database"]
@@ -82,13 +90,60 @@ variable "volume_name" {
 }
 
 variable "provisioner_file" {
-  description = "List with the names of each provisioner .sh file"
+  description = "List with the names of each provisioner .tpl file (which is a .sh with terraform variables on it)"
   type        = list(string)
-  default     = ["Provision-frontend.sh", "Provision-backend.sh", "Provision-database.sh"]
+  default     = ["Provision-frontend.tpl", "Provision-backend.tpl", "Provision-database.tpl"]
 }
 
 variable "port" {
   description = "List of ports designed for access in each instance"
   type        = list(number)
   default     = [3030, 3000, 3306]
+}
+
+variable "privateIP" {
+  description = "List of predefined private ips"
+  type        = list(string)
+  # IP addresses in their normal distribution between the subnets
+  # default = ["10.1.0.10", "10.1.80.8", "10.1.80.12"]  # 10.1.0.10 for front, 10.1.80.0 for back, 10.1.80.12 for db
+
+  # TEMPORARY DEBUG VALUE
+  # IP addresses on public subnets in order to test if they work 
+  default = ["10.1.0.10", "10.1.0.8", "10.1.0.12"]
+}
+
+# vars with their normal ip distribution
+# variable "tpl_vars" {
+#   description = "List of variables passed to instances with tpl_file"
+#   type = list(map(string))
+#   default = [ {
+#     back_host = "10.1.80.8" 
+#   },
+#   {
+#     db_host = "10.1.80.12"
+#     db_user = "root"
+#     db_pass = "ubuntu"
+#   },
+#   {
+#     back_host = "10.1.80.8"
+#   }
+#   ]
+# }
+
+# TEMPORARY DEBUG VALUE
+variable "env_vars" {
+  description = "List of environment variables passed with template_file block"
+  type        = list(map(string))
+  default = [{
+    back_host = "10.1.0.8"
+    },
+    {
+      db_host = "10.1.0.12"
+      db_user = "root"
+      db_pass = "ubuntu"
+    },
+    {
+      back_host = "10.1.0.8"
+    }
+  ]
 }
