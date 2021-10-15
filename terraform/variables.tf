@@ -131,7 +131,7 @@ variable "privateIP" {
 # }
 
 # TEMPORARY DEBUG VALUE
-variable "env_vars" {
+variable "env_variables" {
   description = "List of environment variables passed with template_file block"
   type        = list(map(string))
   default = [{

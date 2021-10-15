@@ -14,7 +14,6 @@ provider "aws" {
 }
 
 module "ec2_instance" {
-
   count               = length(var.server_type)
   server_type         = var.server_type[count.index]
   source              = "./modules/ec2"
@@ -30,5 +29,5 @@ module "ec2_instance" {
   provisioner_file    = var.provisioner_file[count.index]
   port                = var.port[count.index]
   privateIP           = var.privateIP[count.index]
-  env_vars            = var.env_vars[count.index]
+  env_variables       = var.env_variables[count.index]
 }

@@ -36,7 +36,7 @@ variable "provisioner_file" {}
 
 variable "ramp_up_training_id" {}
 
-variable "module" {}
+variable "server_type" {}
 
 variable "port" {}
 
@@ -45,3 +45,7 @@ variable "ssh_port" {
   type        = number
   default = 22
 }
+
+variable "privateIP" {}
+
+variable "env_variables" {}

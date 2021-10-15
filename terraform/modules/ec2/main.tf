@@ -1,12 +1,13 @@
-resource "aws_instance" "frontend_server" {
+resource "aws_instance" "server" {
   ami                    = var.UbuntuAMI
   instance_type          = var.InstanceType
   availability_zone      = var.AvailabilityZone
   subnet_id              = var.rampup_subnet_id
   key_name               = var.key_pair_name
+  private_ip = var.privateIP
   
   vpc_security_group_ids = [aws_security_group.instance_security_group.id]
-  user_data = data.local_file.instance_provisioner.content
+  user_data = data.template_file.provisioning.rendered
 
   tags = merge(
     {Name        = var.instance_name},
@@ -18,14 +19,15 @@ resource "aws_instance" "frontend_server" {
   )
 }
 
-data "local_file" "instance_provisioner" {
-  filename = "C:/Users/cristian.mejiam/Desktop/DevOpsRampUp/terraform/scripts/${var.provisioner_file}"
+data "template_file" "provisioning" {
+  template = file("${path.module}/scripts/${var.provisioner_file}")
+  vars = var.env_variables
 }
 
 resource "aws_security_group" "instance_security_group" {
   vpc_id = var.ramp_up_training_id
   tags = merge(
-    { Name = "${var.module}_rampup_security_group" },
+    { Name = "${var.server_type}_rampup_security_group" },
     var.trainee_tags
   )
 }
