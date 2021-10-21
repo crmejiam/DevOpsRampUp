@@ -40,12 +40,10 @@ variable "server_type" {}
 
 variable "port" {}
 
-variable "ssh_port" {
-  description = "The EC2 port that terraform is going to use to ssh on the machine"
-  type        = number
-  default = 22
-}
+variable "ssh_port" {}
 
 variable "privateIP" {}
 
 variable "env_variables" {}
+
+variable "rds_endpoint" {}
