@@ -19,10 +19,9 @@ git clone https://github.com/crmejiam/movie-analyst-api.git
 
 # Let's define the required environment variables
 
-echo "export DB_HOST=${db_host}" >> /etc/profile
-echo "export DB_USER=${db_user}" >> /etc/profile
-echo "export DB_PASS=${db_pass}" >> /etc/profile
-
+echo "DB_HOST=${db_host}" >> /movie-analyst-api/.env
+echo "DB_USER=${db_user}" >> /movie-analyst-api/.env
+echo "DB_PASS=${db_pass}" >> /movie-analyst-api/.env
 
 # For Movie-Analyst-Api Repo
 cd movie-analyst-api
@@ -33,5 +32,9 @@ echo 'mysql-server mysql-server/root_password password ubuntu' | debconf-set-sel
 echo 'mysql-server mysql-server/root_password_again password ubuntu' | debconf-set-selections
 sudo apt install -y mysql-server
 
-# Let's start running the api (Api runs on 10.0.0.8 IP for VAGRANT [on port 3000 for terraform and vagrant])
-npm start &              # start for movie-analyst-api
+# Now we're going to provision the database
+mysql -h ${db_host} -u ${db_user} -p${db_pass} -Bse "CREATE DATABASE movie_db;USE movie_db;source /movie-analyst-api/data_model/table_creation_and_inserts.sql;"
+
+# Let's start running the api (Api runs on 10.1.80.8 IP [on port 3000 for terraform and vagrant])
+sudo npm start --verbose > /movie-analyst-api/back.log 2>&1 &   # start for movie-analyst-api
+# with the previous command we save the npm start output on back.log file for debug purposes

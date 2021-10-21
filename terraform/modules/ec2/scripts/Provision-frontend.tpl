@@ -19,11 +19,12 @@ git clone https://github.com/crmejiam/movie-analyst-ui.git
 
 # Let's define the required environment variables
 
-echo "export BACK_HOST=${back_host}" >> /etc/profile
+echo "BACK_HOST=${back_host}" >> /movie-analyst-ui/.env
 
 # For Movie-Analyst-ui Repo
 cd movie-analyst-ui 
 sudo npm install -y
 
 # Let's start running the ui (UI runs on port 3030)
-npm start &              # start for movie-analyst-ui
+sudo npm start --verbose > /movie-analyst-ui/front.log 2>&1 &          # start for movie-analyst-ui
+# with the previous command we save the npm start output on front.log file for debug purposes
