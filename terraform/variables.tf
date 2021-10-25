@@ -113,7 +113,8 @@ variable "env_variables" {
     back_host = "10.1.80.8"
     },
     {
-      # TODO: ADD DB CREDENTIALS
+      db_user = "dbrampup"        # credentials used by the backend
+      db_pass = "ubuntudb"
     }
   ]
 }
