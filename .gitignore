@@ -1,4 +1,4 @@
 vagrant/.vagrant
 /shared/table_creation_and_inserts.sql
-terraform/.terraform
-terraform/*.tfstate*
+tf_*/.terraform
+tf_*/*.tfstate*
