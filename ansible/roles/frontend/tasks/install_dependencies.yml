@@ -1,0 +1,11 @@
+---
+
+- name: Install dependencies
+  become: yes
+  apt:
+    pkg: 
+      - npm
+      - nodejs
+      - git
+    state: latest
+    update_cache: yes

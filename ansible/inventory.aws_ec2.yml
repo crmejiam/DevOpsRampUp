@@ -1,0 +1,22 @@
+plugin: aws_ec2
+
+regions:
+  - us-west-1
+
+filters:
+  tag:responsible: cristian.mejiam
+  tag:project: ramp-up-devops
+  tag:node_type: managed
+
+hostnames:
+  - name: 'instance-id'
+    separator: ' | '
+    prefix: 'tag:Name'
+
+groups: 
+  frontend: "'frontend' in tags.get('Name')"
+  backend: "'backend' in tags.get('Name')"
+
+compose:
+  # set the ansible_host variable to connect with the private IP address without changing the hostname
+  ansible_host: private_ip_address

@@ -1,0 +1,5 @@
+---
+
+# Ejecutar el front con forever
+- name: "Start frontend Node.js app."
+  command: "forever start {{repo_path}}/server.js"

@@ -1,0 +1,18 @@
+plugin: amazon.aws.aws_rds
+regions: 
+  - us-west-1
+
+filters:
+    db-instance-id: cmm-rampup-db
+
+hostnames:
+  - name: 'db-instance-id'
+    separator: " | "
+    prefix: 'engine'
+
+groups: 
+  database: "'rampup' in db-instance-id"
+
+compose:
+  # set the ansible_host variable to connect with the private IP address without changing the hostname
+  ansible_host: address

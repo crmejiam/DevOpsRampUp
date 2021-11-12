@@ -1,0 +1,20 @@
+---
+- name: Initial provisioning frontend
+  hosts: frontend
+  remote_user: ubuntu
+
+  roles: 
+    - frontend
+
+- name: Initial provisioning backend
+  hosts: backend
+  remote_user: ubuntu
+
+  roles:
+    - backend
+
+- name: Initial provisioning database
+  hosts: localhost
+
+  roles:
+    - database

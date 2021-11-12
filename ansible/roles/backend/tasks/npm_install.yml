@@ -1,0 +1,7 @@
+---
+
+- name: Install node dependencies
+  become: yes
+  npm:
+    path: "{{ repo_path }}"
+

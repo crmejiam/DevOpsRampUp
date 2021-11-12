@@ -1,0 +1,4 @@
+- name: Install node dependencies
+  npm:
+    path: "{{ repo_path }}"
+    state: present

@@ -1,0 +1,20 @@
+---
+# tasks file for frontend
+
+- name: Install necessary dependencies to provision frontend servers
+  import_tasks: install_dependencies.yml
+
+- name: Clone repo with front contents
+  import_tasks: clone_repo.yml
+
+- name: Install node.js dependencies in order to build front app
+  import_tasks: npm_install.yml
+
+- name: Add env variables to .env file in order to run server.js with required values
+  import_tasks: env_variables.yml
+
+- name: Install forever in order to daemonize front app process
+  import_tasks: install_forever.yml
+
+- name: Run frontend process with forever in background
+  import_tasks: build_front_forever.yml

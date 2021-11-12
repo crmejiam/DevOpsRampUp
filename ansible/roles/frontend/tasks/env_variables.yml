@@ -1,0 +1,5 @@
+- name: passing environment variables on .env file
+  shell: |
+    echo "BACK_HOST={{back_host}}" >> ./.env
+  args:
+    chdir: "{{repo_path}}"
