@@ -1,5 +1,0 @@
----
-# vars file for database
-db_user: "here goes admin db user"
-db_pass: "here goes db pass"
-db_host: "here goes rds instance endpoint"

@@ -3,6 +3,6 @@
 
 git_repo_url: https://github.com/crmejiam/movie-analyst-api.git
 repo_path: /home/ubuntu/movie-analyst-api
-db_user: "here goes admin db user"
-db_pass: "here goes db pass"
-db_host: "here goes rds instance endpoint"
+db_host: # here goes rds host
+db_user: # here goes db admin user
+db_pass: # here goes db admin pass
