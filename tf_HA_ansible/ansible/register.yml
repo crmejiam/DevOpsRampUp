@@ -1,0 +1,6 @@
+- name: new "{{server_type}} instance register"
+  hosts: all
+  remote_user: ubuntu
+
+  roles: 
+    - "{{server_type}}"

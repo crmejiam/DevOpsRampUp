@@ -1,3 +1,4 @@
+# This dynamic inventory is no longer used, but is useful as ansible example
 plugin: aws_ec2
 
 regions:

@@ -1,3 +1,4 @@
+# This playbook is no longer used, but is useful as ansible roles execution example
 ---
 - name: Initial provisioning frontend
   hosts: frontend

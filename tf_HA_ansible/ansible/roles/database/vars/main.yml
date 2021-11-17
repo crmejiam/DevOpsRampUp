@@ -1,0 +1,5 @@
+---
+# vars file for database
+# db_host: passed by terraform
+# db_user: passed by terraform
+# db_pass: passed by terraform

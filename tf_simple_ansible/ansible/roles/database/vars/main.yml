@@ -1,6 +1,0 @@
----
-# vars file for database
-db_host: # here goes rds host
-db_user: # here goes db admin user
-db_pass: # here goes db admin pass
-
