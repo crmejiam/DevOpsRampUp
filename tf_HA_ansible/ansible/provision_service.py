@@ -8,5 +8,5 @@ app = Flask(__name__)
 
 @app.route("/register/<server_type>")
 def instance_provision(server_type):
-    os.system('ansible-playbook -i {}, ~/ansible/{}-register.yml'.format(request.args.get("ip"), server_type))
+    os.system('ansible-playbook -i {}, ~/ansible/register.yml --extra-vars "server_type={}"'.format(request.args.get("ip"), server_type))
     return Response(status=200)
