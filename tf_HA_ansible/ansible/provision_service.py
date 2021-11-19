@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/register/<server_type>")
 def instance_provision(server_type):
     # Copy public ssh key to created instance
-    os.system('ssh-copy-id -f -i /home/ubuntu/.ssh/id_rsa.pub -o "IdentityFile /home/ubuntu/Ramp-Up-cristian.mejiam-Key-Pair.pem" ubuntu@{}'.format(request.args.get("ip")))
+    os.system('ssh-copy-id -f -i /home/ubuntu/.ssh/id_rsa.pub -o "IdentityFile /home/ubuntu/{}" ubuntu@{}'.format("Ramp-Up-cristian.mejiam-Key-Pair.pem", request.args.get("ip")))
     # Call provision playbook
-    os.system('ansible-playbook -i {}, ~/ansible/register.yml --extra-vars "server_type={}"'.format(request.args.get("ip"), server_type))
+    os.system('ansible-playbook -i {}, /home/ubuntu/ansible/register.yml --extra-vars "server_type={}"'.format(request.args.get("ip"), server_type))
     return Response(status=200)
