@@ -1,0 +1,5 @@
+- name: Initial provisioning database
+  hosts: localhost
+
+  roles:
+    - database
