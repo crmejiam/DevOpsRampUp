@@ -3,4 +3,3 @@
 
 git_repo_url: https://github.com/crmejiam/movie-analyst-ui.git
 repo_path: /home/ubuntu/movie-analyst-ui
-#back_host: passed by terraform

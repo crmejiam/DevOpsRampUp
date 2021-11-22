@@ -3,6 +3,3 @@
 
 git_repo_url: https://github.com/crmejiam/movie-analyst-api.git
 repo_path: /home/ubuntu/movie-analyst-api
-# db_host: passed by terraform
-# db_user: passed by terraform
-# db_pass: passed by terraform
