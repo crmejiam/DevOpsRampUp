@@ -8,6 +8,10 @@ app = Flask(__name__)
 
 @app.route("/register/<server_type>")
 def instance_provision(server_type):
+
+    # for debug purposes, to see which user is executing this process
+    os.system('whoami > /home/ubuntu/current_user.txt')
+
     # Copy public ssh key to created instance
     os.system('echo "yes\n" | sudo ssh-copy-id -f -i /root/.ssh/id_rsa.pub -o "IdentityFile /home/ubuntu/{}" ubuntu@{}'.format("cmm-rampup-key-ansible.pem", request.args.get("ip")))
     # Call provision playbook
