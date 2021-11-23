@@ -89,7 +89,8 @@ locals {
     back_host = module.load_balancer[1].tier_load_balancer_address
     },
     {
-      # Here goes the db credentials used by the database
+      db_user      = # Here goes db admin user
+      db_pass      = # Here goes db admin pass
     }
   ]
 }
