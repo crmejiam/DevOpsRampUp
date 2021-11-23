@@ -16,6 +16,18 @@ variable "tfstate_file_path" {
   default     = "cristian.mejiam/terraform.tfstate"
 }
 
+variable "UbuntuAMI" {
+  description = "Ubuntu AMI for the RampUpRegion"
+  type        = string
+  default     = "ami-0d382e80be7ffdae5"
+}
+
+variable "key_pair_name" {
+  description = "The EC2 Key Pair to associate with the EC2 Instance for SSH access."
+  type        = string
+  default     = "cmm-rampup-key-ansible"
+}
+
 variable "AvailabilityZone" {
   description = "Availability Zone for the public and private subnet that we are going to use"
   type        = string
@@ -64,7 +76,7 @@ variable "InstanceType" {
 variable "provisioner_file" {
   description = "List with the names of each provisioner .tpl file (which is a .sh with terraform variables on it)"
   type        = list(string)
-  default     = ["Provision-frontend.tpl", "Provision-backend.tpl", "Provision-control-node.tpl"]
+  default     = ["instance-register.tpl", "Provision-control-node.tpl"]
 }
 
 variable "port" {
@@ -99,6 +111,6 @@ variable "internal_facing_lb_value" {
 
 variable "node_type" {
   description = "Type of ansible node, can be [control, managed]"
-  type = list(string)
-  default = [managed, managed, control]
+  type        = list(string)
+  default     = ["managed", "managed", "control"]
 }

@@ -43,19 +43,6 @@ data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
 
-resource "aws_security_group_rule" "allow-ssh-access" {
-  type              = "ingress"
-  description       = "allow access in port 22 to ssh from host ip"
-  from_port         = var.ssh_port
-  to_port           = var.ssh_port
-  protocol          = "tcp"
-  cidr_blocks       = [
-                        "${chomp(data.http.myip.body)}/32",
-                        data.aws_vpc.rampup_vpc.cidr_block
-                      ] # chomp function is to erase newline characters at the end of the string
-  security_group_id = aws_security_group.load_balancer_security_group.id
-}
-
 resource "aws_security_group_rule" "allow-all-egress" {
   type              = "egress"
   description       = "allow all egress for each instance"

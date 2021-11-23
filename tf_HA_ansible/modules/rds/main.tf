@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "allow-db-access" {
   protocol          = "tcp"
   cidr_blocks       = [
                         "${chomp(data.http.myip.body)}/32",
-                        data.aws_subnet.private_subnet.cidr_block  # terraform didn't left me put the back private ip...
+                        data.aws_vpc.rampup_vpc.cidr_block
                       ] # chomp function is to erase newline characters at the end of the string
   security_group_id = aws_security_group.db_security_group.id
 }
@@ -51,6 +51,6 @@ resource "aws_security_group_rule" "allow-all-egress" {
   security_group_id = aws_security_group.db_security_group.id
 }
 
-data "aws_subnet" "private_subnet" {
-  id = var.rampup_subnet_id
+data "aws_vpc" "rampup_vpc" {
+  id = var.ramp_up_training_id
 }

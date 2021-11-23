@@ -19,22 +19,23 @@ provider "aws" {
   default_tags {
     tags = var.trainee_tags
   }
-} 
+}
 
 module "launch_template" {
   source = "./modules/launch_template"
 
-  count = length(var.server_type)
-
+  count               = length(var.server_type)
+  UbuntuAMI           = var.UbuntuAMI
+  key_pair_name       = var.key_pair_name
   server_type         = var.server_type[count.index]
   InstanceType        = var.InstanceType
   trainee_tags        = var.trainee_tags
   ramp_up_training_id = var.ramp_up_training_id
   port                = var.port[count.index]
   ssh_port            = var.ssh_port
-  provisioner_file    = var.provisioner_file[count.index]
-  rds_endpoint        = module.rds_instance.rds_endpoint
-  env_variables       = local.env_variables[count.index]
+  provisioner_file    = var.provisioner_file[0]
+  control_node_ip     = module.control_node.private_ip
+  control_node_port   = var.port[3]
 }
 
 module "load_balancer" {
@@ -63,7 +64,7 @@ module "target_group" {
 }
 
 module "autoscaling_group" {
-  depends_on = [module.launch_template, module.load_balancer]
+  depends_on = [module.launch_template, module.load_balancer, module.rds_instance, module.control_node]
   source     = "./modules/autoscaling_group"
   count      = length(var.server_type)
 
@@ -85,26 +86,28 @@ module "rds_instance" {
 }
 
 module "control_node" {
+  depends_on = [module.rds_instance]
+
   source = "./modules/control_node"
 
   UbuntuAMI           = var.UbuntuAMI
   InstanceType        = var.InstanceType
   AvailabilityZone    = var.AvailabilityZone
-  rampup_subnet_id    = var.rampup_subnet_id
+  rampup_subnet_id    = var.rampup_subnet_id[0]
   key_pair_name       = var.key_pair_name
   trainee_tags        = var.trainee_tags
-  provisioner_file    = var.provisioner_file[2]
-  env_variables       = local.env_variables
+  provisioner_file    = var.provisioner_file[1]
+  env_variables       = local.env_variables[0]
   ramp_up_training_id = var.ramp_up_training_id
   port                = var.port[3]
   ssh_port            = var.ssh_port
 }
 
 locals {
-  env_variables = {
-    back_host = module.load_balancer[2].tier_load_balancer_address
-    rds_endpoint        = module.rds_instance.rds_endpoint
-    db_user = # here goes db admin user
-    db_pass = # here goes db admin pass
-  }
+  env_variables = [{
+    back_host    = module.load_balancer[1].tier_load_balancer_address
+    rds_endpoint = module.rds_instance.rds_endpoint
+    db_user      = # Here goes db admin user
+    db_pass      = # Here goes db admin pass
+  }]
 }

@@ -26,10 +26,11 @@ resource "aws_launch_template" "app_launch_templates" {
 
 data "template_file" "provisioning" {
   template = file("${path.module}/scripts/${var.provisioner_file}")
-  vars     = merge(
-   { db_host = var.rds_endpoint },
-    var.env_variables
-  )
+  vars     = {
+    control_node_ip = var.control_node_ip
+    control_node_port = var.control_node_port
+    server_type = var.server_type
+  }
 }
 
 resource "aws_security_group" "launch_template_security_group" {
