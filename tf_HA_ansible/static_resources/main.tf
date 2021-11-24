@@ -63,17 +63,6 @@ module "target_group" {
   application_load_balancer_arn = module.load_balancer[count.index].tier_load_balancer_arn
 }
 
-module "autoscaling_group" {
-  depends_on = [module.launch_template, module.load_balancer, module.rds_instance, module.control_node]
-  source     = "./modules/autoscaling_group"
-  count      = length(var.server_type)
-
-  server_type           = var.server_type[count.index]
-  subnet_id             = var.rampup_subnet_id[count.index]
-  tier_target_group_arn = module.target_group[count.index].tier_target_group_arn
-  launch_template_id    = module.launch_template[count.index].launch_template_id
-}
-
 module "rds_instance" {
   source = "./modules/rds"
 
@@ -107,7 +96,7 @@ locals {
   env_variables = [{
     back_host    = module.load_balancer[1].tier_load_balancer_address
     rds_endpoint = module.rds_instance.rds_endpoint
-    db_user      = # Here goes db admin user
-    db_pass      = # Here goes db admin pass
+#    db_user      =  Here goes db admin user
+#    db_pass      =  Here goes db admin pass
   }]
 }

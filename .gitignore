@@ -2,3 +2,4 @@ vagrant/.vagrant
 /shared/table_creation_and_inserts.sql
 tf_*/.terraform
 tf_*/*.tfstate*
+tf_HA_ansible/*resources/.terraform
