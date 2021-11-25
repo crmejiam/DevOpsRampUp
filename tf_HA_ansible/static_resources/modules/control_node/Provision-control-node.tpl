@@ -33,7 +33,7 @@ git clone https://github.com/crmejiam/DevOpsRampUp.git
 
 # Let's move ansible folder to home and delete the rest 
 
-mv ./DevOpsRampUp/tf_HA_ansible/ansible/ /home/ubuntu
+mv ./DevOpsRampUp/tf_HA_ansible/static_resources/ansible/ /home/ubuntu
 rm -rf ./DevOpsRampUp
 
 # We need to download .sql file in order to dump db entries later

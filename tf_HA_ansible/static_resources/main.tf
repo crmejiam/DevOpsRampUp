@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "ramp-up-devops-psl"
-    key    = "cristian.mejiam/terraform.tfstate"
+    key    = "cristian.mejiam/terraform.static-tfstate"
     region = "us-west-1"
   }
   required_version = ">= 0.14.9"
@@ -96,7 +96,7 @@ locals {
   env_variables = [{
     back_host    = module.load_balancer[1].tier_load_balancer_address
     rds_endpoint = module.rds_instance.rds_endpoint
-#    db_user      =  Here goes db admin user
-#    db_pass      =  Here goes db admin pass
+   db_user      =  "dbrampup"
+   db_pass      =  "ubuntudb"
   }]
 }

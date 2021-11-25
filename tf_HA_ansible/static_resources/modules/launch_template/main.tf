@@ -1,6 +1,9 @@
 resource "aws_launch_template" "app_launch_templates" {
   name = "cmm-rampup-${var.server_type}-launch-template"
-  # tags are defined on root tf directory
+  tags = merge(
+    { tier = var.server_type },
+    var.trainee_tags
+  )
   image_id      = var.UbuntuAMI
   instance_type = var.InstanceType
   key_name = var.key_pair_name
