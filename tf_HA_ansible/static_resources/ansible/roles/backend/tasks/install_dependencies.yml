@@ -7,6 +7,5 @@
       - npm
       - nodejs
       - git
-      - mysql-server
     state: latest
     update_cache: yes 

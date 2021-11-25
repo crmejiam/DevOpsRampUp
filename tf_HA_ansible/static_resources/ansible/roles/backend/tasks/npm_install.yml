@@ -3,5 +3,5 @@
 - name: Install node dependencies
   become: yes
   npm:
+    state: latest
     path: "{{ repo_path }}"
-
