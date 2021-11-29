@@ -16,13 +16,5 @@ variable "ramp_up_training_id" {}
 
 variable "port" {}
 
-variable "db_user" {
-  description = "admin user of the database"
-  type        = string
-  default     = "dbrampup"
-}
-variable "db_pass" {
-  description = "password of the database"
-  type        = string
-  default     = "ubuntudb"
-}
+variable "db_user" {}
+variable "db_pass" {}

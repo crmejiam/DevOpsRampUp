@@ -5,7 +5,7 @@ resource "aws_autoscaling_group" "app_autoscaling_groups" {
   max_size           = 1
   min_size           = 1
   health_check_grace_period = 30
-  target_group_arns = [ var.tier_target_group_arn ]
+  target_group_arns = [ data.aws_lb_target_group.tier_target_group.arn ]
   
   tag {
     key = "project"
@@ -20,7 +20,19 @@ resource "aws_autoscaling_group" "app_autoscaling_groups" {
   }
 
   launch_template {
-    id      = var.launch_template_id
+    id      = data.aws_launch_template.tier_launch_template.id
     version = "$Latest"
   }
+}
+
+data "aws_launch_template" "tier_launch_template" {
+  name = "cmm-rampup-${var.server_type}-launch-template"
+  tags = merge(
+    { tier = var.server_type },
+    var.trainee_tags
+  )
+}
+
+data "aws_lb_target_group" "tier_target_group" {
+  name = "cmm-rampup-${var.server_type}-target-group"
 }

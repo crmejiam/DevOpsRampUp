@@ -72,6 +72,8 @@ module "rds_instance" {
   trainee_tags        = var.trainee_tags
   ramp_up_training_id = var.ramp_up_training_id
   port                = var.port[2]
+  db_user = data.aws_ssm_parameter.db_user.value
+  db_pass = data.aws_ssm_parameter.db_pass.value
 }
 
 module "control_node" {
@@ -79,14 +81,18 @@ module "control_node" {
 
   source = "./modules/control_node"
 
-  UbuntuAMI           = var.UbuntuAMI
-  InstanceType        = var.InstanceType
-  AvailabilityZone    = var.AvailabilityZone
-  rampup_subnet_id    = var.rampup_subnet_id[0]
-  key_pair_name       = var.key_pair_name
-  trainee_tags        = var.trainee_tags
-  provisioner_file    = var.provisioner_file[1]
-  env_variables       = local.env_variables[0]
+  UbuntuAMI        = var.UbuntuAMI
+  InstanceType     = var.InstanceType
+  AvailabilityZone = var.AvailabilityZone
+  rampup_subnet_id = var.rampup_subnet_id[0]
+  key_pair_name    = var.key_pair_name
+  trainee_tags     = var.trainee_tags
+  provisioner_file = var.provisioner_file[1]
+  env_variables = merge(
+    { db_user = data.aws_ssm_parameter.db_user.value
+    db_pass = data.aws_ssm_parameter.db_pass.value },
+    local.env_variables[0]
+  )
   ramp_up_training_id = var.ramp_up_training_id
   port                = var.port[3]
   ssh_port            = var.ssh_port
@@ -96,7 +102,13 @@ locals {
   env_variables = [{
     back_host    = module.load_balancer[1].tier_load_balancer_address
     rds_endpoint = module.rds_instance.rds_endpoint
-   db_user      =  "dbrampup"
-   db_pass      =  "ubuntudb"
   }]
+}
+
+data "aws_ssm_parameter" "db_user" {
+  name = "cmm-rampup-dbuser"
+}
+
+data "aws_ssm_parameter" "db_pass" {
+  name = "cmm-rampup-dbpass"
 }
