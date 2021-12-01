@@ -1,0 +1,8 @@
+---
+# tasks file for database
+
+- name: Create moviedb database where app's data is going to be saved
+  import_tasks: create_database.yml
+
+- name: Restore database executing .sql file
+  import_tasks: restore_database.yml

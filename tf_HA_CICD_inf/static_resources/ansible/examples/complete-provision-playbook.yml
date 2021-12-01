@@ -1,0 +1,124 @@
+# This playbook is no longer used, but is useful as ansible example
+---
+- name: Initial frontend provisioning
+  hosts: frontend
+  remote_user: ubuntu
+
+  vars: 
+    git_repo_url: https://github.com/crmejiam/movie-analyst-ui.git
+    repo_path: /home/ubuntu/movie-analyst-ui
+    back_host: 10.1.80.247
+
+  tasks:
+    
+    - name: Install dependencies
+      become: yes
+      apt:
+        pkg: 
+          - npm
+          - nodejs
+          - git
+        state: latest
+        update_cache: yes
+    
+    - name: Clone front repository
+      git: 
+        repo: "{{ git_repo_url }}"
+        dest: "{{ repo_path }}"
+
+    - name: Install node dependencies
+      npm:
+        path: "{{ repo_path }}"
+        state: present
+
+    - name: passing environment variables on .env file
+      shell: |
+        echo "BACK_HOST={{back_host}}" >> ./.env
+      args:
+        chdir: "{{repo_path}}"
+
+    # Instalar forever para correr la app en background con ansible
+    - name: "Install forever (to run Node.js app)."
+      become: yes
+      npm: name=forever global=yes state=present
+
+    # Ejecutar el front con forever
+    - name: "Start frontend Node.js app."
+      command: "forever start {{repo_path}}/server.js"
+
+- name: Initial backend provisioning
+  hosts: backend
+  remote_user: ubuntu
+
+  vars: 
+    git_repo_url: https://github.com/crmejiam/movie-analyst-api.git
+    repo_path: /home/ubuntu/movie-analyst-api
+    db_host: # here goes db endpoint
+    db_user: # here goes db admin user
+    db_pass: # here goes db admin pass
+
+  tasks: 
+
+    - name: Install dependencies
+      become: yes
+      apt:
+        pkg: 
+          - npm
+          - nodejs
+          - git
+          - mysql-server
+        state: latest
+        update_cache: yes 
+
+    - name: Clone front repository
+      git: 
+        repo: "{{ git_repo_url }}"
+        dest: "{{ repo_path }}"
+
+    - name: Install node dependencies
+      become: yes
+      npm:
+        path: "{{ repo_path }}"
+
+    - name: passing environment variables on .env file
+      shell: |
+        echo "DB_HOST={{db_host}}" >> ./.env
+        echo "DB_USER={{db_user}}" >> ./.env
+        echo "DB_PASS={{db_pass}}" >> ./.env
+      args:
+        chdir: "{{repo_path}}"
+
+    # Instalar forever para correr la app en background con ansible
+    - name: "Install forever (to run Node.js app)."
+      become: yes
+      npm: name=forever global=yes state=present
+
+    # Ejecutar el back con forever
+    - name: "Start backend Node.js app."
+      command: "forever start {{repo_path}}/server.js"
+
+- name: Initial database provisioning
+  
+  vars:
+    db_host: # here goes db endpoint
+    db_user: # here goes db admin user
+    db_pass: # here goes db admin pass
+
+  tasks:
+
+    - name: Create a new database with name "movie_db"
+      mysql_db:
+        login_host: "{{db_host}}"
+        login_user: "{{db_user}}"
+        login_password: "{{db_pass}}"
+        name: movie_db
+        state: present
+        
+    - name: Restore database
+      mysql_db:
+        login_host: "{{db_host}}"
+        login_user: "{{db_user}}"
+        login_password: "{{db_pass}}"
+        name: movie_db
+        state: import
+        target: /home/ubuntu/ansible/table_creation_and_inserts.sql

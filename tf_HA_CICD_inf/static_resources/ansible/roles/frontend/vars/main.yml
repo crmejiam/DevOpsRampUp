@@ -1,0 +1,5 @@
+---
+# vars file for frontend
+
+docker_image: crmejiam/rampup-frontend
+repo_path: /movie-analyst-ui

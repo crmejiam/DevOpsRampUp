@@ -1,0 +1,17 @@
+---
+# tasks file for frontend
+
+- name: Install necessary dependencies to provision frontend servers
+  import_tasks: install_dependencies.yml 
+
+- name: Pull frontend docker image
+  import_tasks: docker_pull.yml
+
+- name: Run frontend docker image
+  import_tasks: docker_run.yml
+
+- name: Add env variables to .env file in order to run server.js with required values
+  import_tasks: env_variables.yml
+
+- name: Run frontend app on docker container
+  import_tasks: run_front_docker.yml

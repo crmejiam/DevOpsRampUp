@@ -1,0 +1,6 @@
+---
+
+# Instalar forever para correr la app en background con ansible
+- name: "Install forever (to run Node.js app)."
+  become: yes
+  npm: name=forever global=yes state=present

@@ -1,0 +1,7 @@
+- name: Create a new database with name "movie_db"
+  mysql_db:
+    login_host: "{{db_host}}"
+    login_user: "{{db_user}}"
+    login_password: "{{db_pass}}"
+    name: movie_db
+    state: present

@@ -1,0 +1,9 @@
+---
+
+- name: Run docker front container
+  community.docker.docker_container:
+    name: frontend
+    image: "{{docker_image}}"
+    ports:
+      - "3030:3030"
+    detach: yes
