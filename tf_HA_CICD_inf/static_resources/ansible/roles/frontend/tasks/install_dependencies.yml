@@ -7,6 +7,5 @@
       - npm
       - nodejs
       - git
-      - docker-ce
     state: latest
     update_cache: yes

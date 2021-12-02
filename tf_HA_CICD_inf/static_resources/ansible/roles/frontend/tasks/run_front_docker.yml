@@ -1,8 +1,0 @@
----
-
-# Ejecutar el front en docker
-- name: "Start frontend Node.js app."
-  community.docker.docker_container_exec:
-  container: frontend
-  command: node server.js
-  chdir: "{{repo_path}}"

@@ -1,5 +1,0 @@
-- name: passing environment variables on .env file
-  community.docker.docker_container_exec:
-    container: frontend
-    command: echo "BACK_HOST={{back_host}}" >> ./.env
-    chdir: "{{repo_path}}"
