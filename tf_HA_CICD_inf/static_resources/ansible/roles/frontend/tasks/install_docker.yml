@@ -10,7 +10,10 @@
 
 - name: Install required system packages
   become: yes
-  apt: name={{ item }} state=latest update_cache=yes
+  apt: 
+    name: {{ item }} 
+    state: latest 
+    update_cache: yes
   loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
 
 - name: Add Docker GPG apt Key
@@ -27,4 +30,11 @@
 
 - name: Update apt and install docker-ce
   become: yes
-  apt: update_cache=yes name=docker-ce state=latest
+  apt: 
+    update_cache: yes 
+    name: docker-ce 
+    state: latest
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker

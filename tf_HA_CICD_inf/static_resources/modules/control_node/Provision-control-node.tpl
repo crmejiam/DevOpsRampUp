@@ -64,7 +64,6 @@ apt install --yes python3-pip
 pip install flask
 pip install virtualenv
 pip install PyMySQL
-pip install docker-py
 
 # Before we create the provisioning service let's provision the database
 
