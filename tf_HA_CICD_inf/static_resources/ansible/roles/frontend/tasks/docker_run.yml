@@ -1,6 +1,7 @@
 ---
 
 - name: Run docker front container
+  become: yes
   community.docker.docker_container:
     name: frontend
     image: "{{docker_image}}"

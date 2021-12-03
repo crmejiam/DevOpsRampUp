@@ -36,5 +36,6 @@
     state: latest
 
 - name: Install Docker Module for Python
+  become: yes
   pip:
     name: docker
