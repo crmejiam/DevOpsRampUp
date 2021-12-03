@@ -22,24 +22,6 @@ apt install --yes mysql-server
 # Let's install git in order to get ansible's repo folder
 
 apt install --yes git
-
-# Let's install docker in order to be able to execute docker ansible playbooks
-# [commands extracted from docker documentation]
-
-apt-get update
-apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-apt-get update
-apt-get install --yes docker-ce docker-ce-cli containerd.io 
  
 # Let's change directory to /home/ubuntu/ to do everything on ubuntu's home dir (just in case)
 
@@ -82,7 +64,7 @@ apt install --yes python3-pip
 pip install flask
 pip install virtualenv
 pip install PyMySQL
-pip install docker
+pip install docker-py
 
 # Before we create the provisioning service let's provision the database
 

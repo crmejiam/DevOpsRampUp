@@ -1,6 +1,0 @@
----
-
-- name: Pull docker front image
-  community.docker.docker_image: 
-    name: "{{docker_image}}"
-    source: pull

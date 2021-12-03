@@ -7,8 +7,5 @@
 - name: Perform steps necessary to install docker
   import_tasks: install_docker.yml
 
-- name: Pull frontend docker image
-  import_tasks: docker_pull.yml
-
 - name: Run frontend docker image
   import_tasks: docker_run.yml
