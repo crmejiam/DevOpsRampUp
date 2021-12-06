@@ -7,5 +7,7 @@
     image: "{{docker_image}}"
     ports:
       - "3030:3030"
+    env:
+      BACK_HOST: "{{back_host}}"
     detach: yes
     pull: true
