@@ -1,7 +1,0 @@
-- name: passing environment variables on .env file
-  shell: |
-    echo "DB_HOST={{db_host}}" >> ./.env
-    echo "DB_USER={{db_user}}" >> ./.env
-    echo "DB_PASS={{db_pass}}" >> ./.env
-  args:
-    chdir: "{{repo_path}}"

@@ -1,20 +1,11 @@
 ---
 # tasks file for backend
 
-- name: Install necessary dependencies to build backend 
+- name: Install necessary dependencies to provision backend servers
   import_tasks: install_dependencies.yml
 
-- name: Clone backend repository
-  import_tasks: clone_repo.yml
+- name: Perform steps necessary to install docker
+  import_tasks: install_docker.yml
 
-- name: Install node dependencies in order to run backend server
-  import_tasks: npm_install.yml
-
-- name: Pass environment variables on a .env file in order to connect to db
-  import_tasks: env_variables.yml
-
-- name: Install forever to daemonize backend server process
-  import_tasks: install_forever.yml
-
-- name: Run backend server on background with forever
-  import_tasks: build_back_forever.yml
+- name: Run backend docker image
+  import_tasks: docker_run.yml

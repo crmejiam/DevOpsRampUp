@@ -1,0 +1,15 @@
+---
+
+- name: Run docker back container
+  become: yes
+  community.docker.docker_container:
+    name: backend
+    image: "{{docker_image}}"
+    ports:
+      - "3000:3000"
+    env:
+      DB_HOST: "{{db_host}}"
+      DB_USER: "{{db_user}}"
+      DB_PASS: "{{db_pass}}"
+    detach: yes
+    pull: true

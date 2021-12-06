@@ -1,5 +1,0 @@
----
-
-# Ejecutar el back con forever
-- name: "Start backend Node.js app."
-  command: "forever start {{repo_path}}/server.js"
