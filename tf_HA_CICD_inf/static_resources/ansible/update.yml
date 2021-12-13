@@ -1,0 +1,6 @@
+- name: "{{server_type}} update"
+  hosts: "{{server_type}}"
+  remote_user: ubuntu
+
+  roles: 
+    - "{{server_type}}"

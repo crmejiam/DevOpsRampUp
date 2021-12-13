@@ -90,7 +90,9 @@ module "control_node" {
   provisioner_file = var.provisioner_file[1]
   env_variables = merge(
     { db_user = data.aws_ssm_parameter.db_user.value
-    db_pass = data.aws_ssm_parameter.db_pass.value },
+    db_pass = data.aws_ssm_parameter.db_pass.value 
+    aws_access_key_id = data.aws_ssm_parameter.aws_access_key_id.value
+    aws_secret_access_key = data.aws_ssm_parameter.aws_secret_access_key.value},
     local.env_variables[0]
   )
   ramp_up_training_id = var.ramp_up_training_id
@@ -111,4 +113,12 @@ data "aws_ssm_parameter" "db_user" {
 
 data "aws_ssm_parameter" "db_pass" {
   name = "cmm-rampup-dbpass"
+}
+
+data "aws_ssm_parameter" "aws_access_key_id" {
+  name = "amazon_access_key_id"
+}
+
+data "aws_ssm_parameter" "aws_secret_access_key" {
+  name = "amazon_secret_access_key"
 }

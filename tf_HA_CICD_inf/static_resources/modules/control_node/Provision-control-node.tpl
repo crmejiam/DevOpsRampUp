@@ -22,7 +22,7 @@ apt install --yes mysql-server
 # Let's install git in order to get ansible's repo folder
 
 apt install --yes git
- 
+
 # Let's change directory to /home/ubuntu/ to do everything on ubuntu's home dir (just in case)
 
 cd /home/ubuntu/
@@ -57,6 +57,14 @@ echo "db_host: ${rds_endpoint}" >> ansible/roles/database/vars/main.yml
 echo "db_user: ${db_user}" >> ansible/roles/database/vars/main.yml
 echo "db_pass: ${db_pass}" >> ansible/roles/database/vars/main.yml
 
+# Set aws credentials file to use dynamic inventory
+
+mkdir ~/.aws 
+touch ~/.aws/credentials
+echo "[default]" >> ~/.aws/credentials
+echo "aws_access_key_id = ${aws_access_key_id}" >> ~/.aws/credentials
+echo "aws_secret_access_key = ${aws_secret_access_key}" >> ~/.aws/credentials
+
 # Now we need to install python3, pip, flask and virtualenv in order to execute the provisioning service
 
 apt install --yes python3
@@ -64,6 +72,7 @@ apt install --yes python3-pip
 pip install flask
 pip install virtualenv
 pip install PyMySQL
+pip install boto3
 
 # Before we create the provisioning service let's provision the database
 

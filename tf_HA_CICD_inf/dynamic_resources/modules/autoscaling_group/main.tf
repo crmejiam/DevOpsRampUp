@@ -19,6 +19,12 @@ resource "aws_autoscaling_group" "app_autoscaling_groups" {
     propagate_at_launch = true
   }
 
+  tag {
+    key = "node_type"
+    value = "managed"
+    propagate_at_launch = true
+  }
+
   launch_template {
     id      = data.aws_launch_template.tier_launch_template.id
     version = "$Latest"
