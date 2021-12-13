@@ -17,5 +17,5 @@ def instance_provision(server_type):
 @app.route("/update/<server_type>")
 def instance_update(server_type):
     # Call provision playbook
-    os.system('ansible-playbook /home/ubuntu/ansible/update.yml -i inventory.asg_aws_ec2.yml --extra-vars "server_type={}"'.format(server_type))
+    os.system('ansible-playbook /home/ubuntu/ansible/update.yml -i /home/ubuntu/ansible/inventory.asg_aws_ec2.yml --extra-vars "server_type={}"'.format(server_type))
     return Response(status=200)
