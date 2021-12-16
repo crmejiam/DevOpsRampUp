@@ -42,7 +42,7 @@ curl -o ansible/table_creation_and_inserts.sql https://raw.githubusercontent.com
 
 # Create key.pem file needed to ssh on managed nodes
 
-echo "${key-pair}" > ./cmm-rampup-key-ansible.pem
+echo "${key_pair}" > ./cmm-rampup-key-ansible.pem
 chmod 700 ./cmm-rampup-key-ansible.pem                  # in order to avoid unprotected private key error
 
 # Send environment variables to ansible vars file

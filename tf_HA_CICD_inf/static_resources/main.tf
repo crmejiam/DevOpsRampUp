@@ -77,7 +77,7 @@ module "rds_instance" {
 }
 
 module "control_node" {
-  depends_on = [module.rds_instance]
+  depends_on = [module.rds_instance, module.key_file]
 
   source = "./modules/control_node"
 
@@ -100,10 +100,33 @@ module "control_node" {
   ssh_port            = var.ssh_port
 }
 
+module "jenkins" {
+  depends_on = [module.control_node, module.key_file]
+  source = "./modules/jenkins_node"
+
+  UbuntuAMI        = var.UbuntuAMI
+  InstanceType     = var.InstanceType
+  AvailabilityZone = var.AvailabilityZone
+  rampup_subnet_id = var.rampup_subnet_id[0]
+  key_pair_name    = var.key_pair_name
+  trainee_tags     = var.trainee_tags
+  provisioner_file = var.provisioner_file[2]
+  ramp_up_training_id = var.ramp_up_training_id
+  port                = var.port[4]
+  ssh_port            = var.ssh_port
+}
+
+module "key_file" {
+  source = "./modules/key_file"
+
+  key_pair_name    = var.key_pair_name  
+}
+
 locals {
   env_variables = [{
     back_host    = module.load_balancer[1].tier_load_balancer_address
     rds_endpoint = module.rds_instance.rds_endpoint
+    key_pair = module.key_file.private_key_pem_content
   }]
 }
 

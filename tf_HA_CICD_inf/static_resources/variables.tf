@@ -76,13 +76,13 @@ variable "InstanceType" {
 variable "provisioner_file" {
   description = "List with the names of each provisioner .tpl file (which is a .sh with terraform variables on it)"
   type        = list(string)
-  default     = ["instance-register.tpl", "Provision-control-node.tpl"]
+  default     = ["instance-register.tpl", "Provision-control-node.tpl", "Provision-jenkins-node.tpl"]
 }
 
 variable "port" {
   description = "List of ports designed for access in each instance"
   type        = list(number)
-  default     = [3030, 3000, 3306, 5000]
+  default     = [3030, 3000, 3306, 5000, 8080]
 }
 
 variable "ssh_port" {
